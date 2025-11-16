@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>OTP Verification Example</h2>
+
+<button onclick="generateOtp()">Generate OTP</button>
+<p id="otpResult"></p>
+
+<br><br>
+
+<input id="otpInput" placeholder="Enter OTP">
+<button onclick="verifyOtp()">Verify OTP</button>
+<p id="verifyResult"></p>
+
+<script>
+async function generateOtp() {
+  const res = await fetch("http://localhost:5000/api/generate-otp", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" }
+  });
+
+  const data = await res.json();
+  document.getElementById("otpResult").innerText = "OTP: " + data.otp;
+}
+
+async function verifyOtp() {
+  const userOtp = document.getElementById("otpInput").value;
+
+  const res = await fetch("http://localhost:5000/api/verify-otp", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ userOtp })
+  });
+
+  const data = await res.json();
+
+  const verifyResult = document.getElementById("verifyResult");
+  verifyResult.innerText = data.message;
+
+  // ✅ Redirect to dashboard if OTP is correct
+  if (data.success) {
+    setTimeout(() => {
+      window.location.href = "dashboard.html"; // your dashboard page
+    }, 1000); // optional 1-second delay
+  }
+}
+</script>
+
+</body>
+</html>
