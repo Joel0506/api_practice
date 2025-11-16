@@ -15,7 +15,7 @@
 
 <script>
 async function generateOtp() {
-  const res = await fetch("http://localhost:5000/api/generate-otp", {
+  const res = await fetch("https://otp-backend.onrender.com/api/generate-otp", {
     method: "POST",
     headers: { "Content-Type": "application/json" }
   });
@@ -27,7 +27,7 @@ async function generateOtp() {
 async function verifyOtp() {
   const userOtp = document.getElementById("otpInput").value;
 
-  const res = await fetch("http://localhost:5000/api/verify-otp", {
+  const res = await fetch("https://otp-backend.onrender.com/api/verify-otp", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ userOtp })
@@ -49,3 +49,4 @@ async function verifyOtp() {
 
 </body>
 </html>
+
